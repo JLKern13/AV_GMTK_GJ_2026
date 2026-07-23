@@ -10,7 +10,7 @@ signal player_caught
 var is_feeding: bool = false
 var is_damaged: bool = false
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Block movement if currently feeding or taking damage
 	if is_feeding or is_damaged:
 		return
@@ -68,7 +68,7 @@ func start_feeding(target_npc: BaseNPC) -> void:
 		is_feeding = false
 		animated_sprite.play("Idle")
 
-func take_damage(damage_time_loss: int) -> void:
+func take_damage(_damage_time_loss: int) -> void:
 	if is_damaged:
 		return
 		

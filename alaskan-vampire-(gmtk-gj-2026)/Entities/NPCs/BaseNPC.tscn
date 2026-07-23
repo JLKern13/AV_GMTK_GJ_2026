@@ -1,18 +1,112 @@
 [gd_scene format=3 uid="uid://b5lx3kpnuh82k"]
 
 [ext_resource type="Script" uid="uid://cn5u3b8hjp04j" path="res://Entities/NPCs/BaseNPC.gd" id="1_714sj"]
+[ext_resource type="Texture2D" uid="uid://c8muwebymeyxa" path="res://Assets/Character Sprites/vampy vilager sprite 1.00.png" id="2_25mon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofjcl"]
+size = Vector2(20, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4fcj"]
+atlas = ExtResource("2_25mon")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hr7vm"]
+atlas = ExtResource("2_25mon")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hirdx"]
+atlas = ExtResource("2_25mon")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqb85"]
+atlas = ExtResource("2_25mon")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3snr"]
+atlas = ExtResource("2_25mon")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rs1a8"]
+atlas = ExtResource("2_25mon")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7tte"]
+atlas = ExtResource("2_25mon")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2orsc"]
+atlas = ExtResource("2_25mon")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bn8sg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4fcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hr7vm")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hirdx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqb85")
+}],
+"loop": true,
+"name": &"Panicking",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3snr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rs1a8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7tte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2orsc")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fvu4p"]
+size = Vector2(20, 21)
 
 [node name="BaseNPC" type="CharacterBody2D" unique_id=1769980847]
 script = ExtResource("1_714sj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1882462880]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_ofjcl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=880376257]
+sprite_frames = SubResource("SpriteFrames_bn8sg")
+animation = &"Panicking"
+frame_progress = 0.2760628
 
-[node name="DetectionArea" type="Area2D" parent="." unique_id=1739051177]
+[node name="VisionPivot" type="Node2D" parent="." unique_id=1252162196]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1142632173]
+[node name="VisionCone" type="Area2D" parent="VisionPivot" unique_id=1739051177]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionPivot/VisionCone" unique_id=1995951761]
+polygon = PackedVector2Array(5, 0, 45, -15, 45, 15)
+
+[node name="RayCast2D" type="RayCast2D" parent="VisionPivot" unique_id=1838614749]
+rotation = -1.5707964
 
 [node name="HitboxArea" type="Area2D" parent="." unique_id=1184615325]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" unique_id=1803212820]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_fvu4p")
