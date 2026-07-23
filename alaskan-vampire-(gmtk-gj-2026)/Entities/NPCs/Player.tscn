@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://b47ql64iggam7"]
+
+[ext_resource type="Script" uid="uid://b5po6e8dy3gr" path="res://Entities/NPCs/Player.gd" id="1_hwohb"]
+[ext_resource type="Texture2D" uid="uid://jsrfh5y23b32" path="res://Assets/Character Sprites/vampy sprite 1.00.png" id="2_2hwgi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3jc3"]
+size = Vector2(56, 84)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv5dm"]
+atlas = ExtResource("2_2hwgi")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5yce4"]
+atlas = ExtResource("2_2hwgi")
+region = Rect2(384, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agtge"]
+atlas = ExtResource("2_2hwgi")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n78tr"]
+atlas = ExtResource("2_2hwgi")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xif0e"]
+atlas = ExtResource("2_2hwgi")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scono"]
+atlas = ExtResource("2_2hwgi")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g3v6a"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"Damaged",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Feeding",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv5dm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5yce4")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agtge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n78tr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xif0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scono")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o3jc3"]
+radius = 24.0
+
+[node name="Player" type="CharacterBody2D" unique_id=2138001670]
+script = ExtResource("1_hwohb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=227333729]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_o3jc3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=571035253]
+sprite_frames = SubResource("SpriteFrames_g3v6a")
+animation = &"Walking"
+frame = 1
+frame_progress = 0.46914333
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=335445046]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=785059190]
+shape = SubResource("CircleShape2D_o3jc3")

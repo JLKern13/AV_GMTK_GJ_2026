@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b5lx3kpnuh82k"]
+
+[ext_resource type="Script" uid="uid://cn5u3b8hjp04j" path="res://Entities/NPCs/BaseNPC.gd" id="1_714sj"]
+
+[node name="BaseNPC" type="CharacterBody2D" unique_id=1769980847]
+script = ExtResource("1_714sj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1882462880]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=880376257]
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1739051177]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1142632173]
+
+[node name="HitboxArea" type="Area2D" parent="." unique_id=1184615325]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" unique_id=1803212820]
