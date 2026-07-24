@@ -148,4 +148,5 @@ animation = &"Idle"
 [node name="AttackArea" type="Area2D" parent="." unique_id=335445046]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=785059190]
+position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_o3jc3")
