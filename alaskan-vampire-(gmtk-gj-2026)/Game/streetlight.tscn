@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dh3kj3dde8apu"]
+
+[ext_resource type="Script" uid="uid://cc2kegfte1f3i" path="res://Game/Streetlight.gd" id="1_s3jty"]
+[ext_resource type="Texture2D" uid="uid://caduuatxkecve" path="res://Assets/Game/Street Light.png" id="2_iiilr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s3jty"]
+size = Vector2(6, 8)
+
+[sub_resource type="Gradient" id="Gradient_puwma"]
+offsets = PackedFloat32Array(0, 0.7063712)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i73t3"]
+gradient = SubResource("Gradient_puwma")
+fill = 1
+fill_from = Vector2(0.5014245, 0.47293448)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wy38k"]
+radius = 96.0
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1879009975]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=575420446]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_s3jty")
+
+[node name="Streetlight" type="Node2D" parent="." unique_id=2129420608]
+script = ExtResource("1_s3jty")
+
+[node name="Sprite2D" type="Sprite2D" parent="Streetlight" unique_id=179939758]
+texture = ExtResource("2_iiilr")
+
+[node name="PointLight2D" type="PointLight2D" parent="Streetlight" unique_id=784446683]
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_i73t3")
+
+[node name="LightZone" type="Area2D" parent="Streetlight" unique_id=148739678]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Streetlight/LightZone" unique_id=20121762]
+shape = SubResource("CircleShape2D_wy38k")

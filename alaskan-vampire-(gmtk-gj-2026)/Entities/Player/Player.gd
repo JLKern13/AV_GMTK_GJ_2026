@@ -2,13 +2,39 @@ class_name Player
 extends BaseEntity
 
 signal blood_gained(amount: int)
+signal blood_changed(current_blood: float, max_blood: float)
 signal player_caught
+
+@export var max_blood: float = 100.0
+@export var current_blood: float = 100.0
+@export var blood_drain_rate: float = 2.0 # Drains 2 blood per second
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $AttackArea
 
 var is_feeding: bool = false
 var is_damaged: bool = false
+
+func _ready() -> void:
+	is_in_shadow = true
+
+func _process(delta: float) -> void:
+	# Continuous blood drain over time
+	if current_blood > 0:
+		current_blood -= blood_drain_rate * delta
+		current_blood = max(current_blood, 0.0)
+		blood_changed.emit(current_blood, max_blood)
+		
+		if current_blood <= 0:
+			on_starved()
+
+func add_blood(amount: float) -> void:
+	current_blood = min(current_blood + amount, max_blood)
+	blood_changed.emit(current_blood, max_blood)
+
+func on_starved() -> void:
+	print("Vampy starved! Game Over.")
+	# Handle death/game over transition here
 
 func _physics_process(_delta: float) -> void:
 	# Block movement if currently feeding or taking damage
@@ -27,8 +53,10 @@ func handle_movement_input() -> void:
 	# Update sprite animations & flipping
 	if direction != Vector2.ZERO:
 		animated_sprite.play("Walking")
-		if direction.x != 0:
-			animated_sprite.flip_h = (direction.x < 0)
+		if direction.x < 0:
+			animated_sprite.flip_h = false
+		else:
+			animated_sprite.flip_h = true
 	else:
 		animated_sprite.play("Idle")
 
@@ -51,20 +79,16 @@ func try_feed() -> void:
 func start_feeding(target_npc: BaseNPC) -> void:
 	is_feeding = true
 	velocity = Vector2.ZERO
-	
-	# Play dust cloud animation
 	animated_sprite.play("Feeding")
 	
-	# Tell the NPC to lock up / enter "being fed on" state
-	target_npc.on_being_eaten()
-	
-	# Wait for NPC's required drain duration (e.g., 3.0s for civilian, 4.5s for police)
+	target_npc.on_being_eaten()	
 	await get_tree().create_timer(target_npc.drain_duration).timeout
 	
-	# Check if player was interrupted (e.g., caught by a cop during the timer)
 	if is_feeding:
-		blood_gained.emit(target_npc.blood_value)
-		target_npc.queue_free() # Remove NPC from scene
+		# Reward the player with blood and update HUD!
+		add_blood(target_npc.blood_value)
+		
+		target_npc.queue_free()
 		is_feeding = false
 		animated_sprite.play("Idle")
 

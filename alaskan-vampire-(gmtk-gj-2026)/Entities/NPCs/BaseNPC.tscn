@@ -85,6 +85,9 @@ size = Vector2(20, 21)
 
 [node name="BaseNPC" type="CharacterBody2D" unique_id=1769980847]
 script = ExtResource("1_714sj")
+panic_screams = Array[AudioStream]([null, null, null, null, null, null])
+
+[node name="ScreamPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1144079078]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1882462880]
 position = Vector2(0, -0.5)
@@ -92,8 +95,7 @@ shape = SubResource("RectangleShape2D_ofjcl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=880376257]
 sprite_frames = SubResource("SpriteFrames_bn8sg")
-animation = &"Panicking"
-frame_progress = 0.2760628
+animation = &"Idle"
 
 [node name="VisionPivot" type="Node2D" parent="." unique_id=1252162196]
 

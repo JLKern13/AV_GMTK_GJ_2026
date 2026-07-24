@@ -8,6 +8,7 @@ var current_state: State = State.IDLE
 @export var drain_duration: float = 3.0
 @export var panic_speed: float = 80.0
 @export var normal_speed: float = 40.0
+@export var panic_screams: Array[AudioStream] = []
 
 var is_alert: bool = false
 var target_player: Player = null
@@ -19,6 +20,7 @@ var state_timer: float = 0.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var detection_area: Area2D = $VisionPivot/VisionCone
 @onready var vision_pivot: Node2D = $VisionPivot # Ensure your pivot node is named VisionPivot
+@onready var scream_player: AudioStreamPlayer2D = $ScreamPlayer
 
 func _ready() -> void:
 	move_speed = normal_speed
@@ -43,8 +45,10 @@ func _physics_process(delta: float) -> void:
 		State.WANDER:
 			velocity = wander_direction * normal_speed
 			animated_sprite.play("Walking")
-			if wander_direction.x != 0:
-				animated_sprite.flip_h = (wander_direction.x < 0)
+			if wander_direction.x < 0:
+				animated_sprite.flip_h = false
+			else:
+				animated_sprite.flip_h = true
 			move_and_slide()
 			
 		State.PANIC:
@@ -52,8 +56,10 @@ func _physics_process(delta: float) -> void:
 			if target_player:
 				var flee_direction = (global_position - target_player.global_position).normalized()
 				velocity = flee_direction * panic_speed
-				if flee_direction.x != 0:
-					animated_sprite.flip_h = (flee_direction.x < 0)
+				if flee_direction.x < 0:
+					animated_sprite.flip_h = false
+				else:
+					animated_sprite.flip_h = true
 				move_and_slide()
 				
 		State.BEING_EATEN:
@@ -99,8 +105,24 @@ func trigger_panic(player_node: Player) -> void:
 	if current_state == State.BEING_EATEN:
 		return
 		
+	# ONLY trigger the scream if they were NOT already panicking!
+	if current_state != State.PANIC:
+		play_random_scream()
+
 	current_state = State.PANIC
 	target_player = player_node
+
+func play_random_scream() -> void:
+	if panic_screams.is_empty():
+		return
+		
+	# Pick a random audio clip from your fiancée's recordings!
+	var random_scream = panic_screams.pick_random()
+	
+	scream_player.stream = random_scream
+	# Slightly adjust pitch each time for extra natural variation (e.g., 0.9x to 1.1x speed/pitch)
+	scream_player.pitch_scale = randf_range(0.9, 1.1)
+	scream_player.play()
 
 func on_being_eaten() -> void:
 	current_state = State.BEING_EATEN
