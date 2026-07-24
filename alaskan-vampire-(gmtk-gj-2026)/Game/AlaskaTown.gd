@@ -1,41 +1,46 @@
 extends Node2D
 
-@export var night_duration_seconds: float = 90.0 
+@export var night_duration_seconds: float = 90.0 # 1.5 minutes per night
 @export var current_day: int = 1
-@export var max_days: int = 30
-@export var sleep_cost: float = 50.0 
+@export var max_days: int = 10                   # 10 days total (~15 min playthrough)
+@export var sleep_cost: float = 70.0             # Daytime sleep cost
+@export var win_reserve_target: float = 250.0    # Reserve goal for 10 days
+
+const MAX_BLOOD: float = 230.0
+const NEUTRAL_BLOOD: float = 90.0
+const RESERVE_THRESHOLD: float = 160.0           # 90 Neutral + 70 Sleep Cost
 
 var reserve_bank: float = 0.0
 var time_remaining: float = 0.0
 var is_night_active: bool = true
+var player_start_position: Vector2 = Vector2.ZERO
 
 @onready var player: Player = $Player
 @onready var hud: HUD = $HUD
-@onready var start_point: Marker2D = $StartingPoint
 @onready var day_splash: DaySplash = $HUD/DaySplash
 
 func _ready() -> void:
+	player_start_position = player.global_position
+	
 	time_remaining = night_duration_seconds
 	
-	# Configure Player 0-200 Scale & Neutral Start
-	player.max_blood = 200.0
-	player.current_blood = 100.0 # Neutral start (Frame 11/12)
+	player.max_blood = MAX_BLOOD
+	player.current_blood = NEUTRAL_BLOOD
 	
-	# Connect HUD
 	player.blood_changed.connect(hud.update_blood_display)
 	hud.update_day_display(current_day, max_days)
 	hud.update_reserve_display(reserve_bank)
+	hud.update_blood_display(player.current_blood, player.max_blood)
 
 func _process(delta: float) -> void:
 	if not is_night_active:
 		return
 		
-	# 1. Nighttime Starvation Check
+	# Starvation Check in Night
 	if player.current_blood <= 0.0:
 		trigger_game_over("VAMPY STARVED IN THE NIGHT!")
 		return
 		
-	# Tick down the night timer
 	time_remaining -= delta
 	time_remaining = max(time_remaining, 0.0)
 	hud.update_time_display(time_remaining)
@@ -46,81 +51,58 @@ func _process(delta: float) -> void:
 func on_dawn_arrived() -> void:
 	is_night_active = false
 	
-	# 2. Daytime Starvation Check
+	# 1. Daytime Starvation Check
 	if player.current_blood < sleep_cost:
 		trigger_game_over("VAMPY STARVED DURING THE DAY!")
 		return
 		
-	# Process Reserves and Day Transitions (See Section 2 below)
-	process_dawn_reserves()
-
-func start_next_day() -> void:
-	# 1. Wipe all active NPCs off the map
-	get_tree().call_group("npcs", "queue_free")
-	
-	# 2. Reset Player Position to StartingPoint Marker2D
-	if start_point:
-		player.global_position = start_point.global_position
-		player.velocity = Vector2.ZERO
-		
-	# 3. Reset night clock & game state
-	time_remaining = night_duration_seconds
-	is_night_active = true
-	
-	# 4. Update UI
-	hud.update_day_display(current_day, max_days)
-	hud.update_blood_display(player.current_blood, player.max_blood)
-	
-	# (Optional) Show your Day Summary Splash overlay here before starting!
-	print("Starting Night %d at Starting Point!" % current_day)
-
-func evaluate_win_condition() -> void:
-	if reserve_bank >= 750:
-		print("VICTORY! Stored %.1f blood and survived the winter!" % reserve_bank)
-	else:
-		print("GAME OVER: Only banked %.1f blood (Needed 750)." % reserve_bank)
-
-func on_player_caught() -> void:
-	is_night_active = false
-	player.show_coffin_death()
-	
-	# Wait 2.5 seconds with the coffin on screen
-	await get_tree().create_timer(2.5).timeout
-	
-	trigger_game_over("BUSTED BY THE POLICE!")
-
-func trigger_game_over(reason_text: String) -> void:
-	is_night_active = false
-	var display_title = "GAME OVER\n" + reason_text
-	
-	# Calls DaySplash, which waits for animation then reloads TitleScreen!
-	day_splash.play_transition(display_title, true)
-
-func process_dawn_reserves() -> void:
-	# 1. Bank any blood above neutral (100.0) into reserves
-	if player.current_blood > 100.0:
-		var surplus: float = player.current_blood - 100.0
+	# 2. Reserve Banking: Anything over 160 blood goes into reserves
+	if player.current_blood > RESERVE_THRESHOLD:
+		var surplus: float = player.current_blood - RESERVE_THRESHOLD
 		reserve_bank += surplus
-		player.current_blood = 100.0 # Cap starting health back to neutral
+		player.current_blood = RESERVE_THRESHOLD # Cap at 160 so after sleep cost they start at 90 neutral
+		
+	# 3. Deduct Daytime Sleep Cost
+	player.current_blood -= sleep_cost
 	
-	# 2. Deduct daytime sleep cost for next night's starting health
-	player.current_blood = max(0.0, player.current_blood - sleep_cost)
-	
-	# 3. Refresh HUD displays
 	hud.update_reserve_display(reserve_bank)
 	hud.update_blood_display(player.current_blood, player.max_blood)
 	
-	print("Reserves Total: %.1f | Next Night Start Blood: %.1f" % [reserve_bank, player.current_blood])
-	
-	# 4. Check Win / Transition conditions
+	# 4. Check Win/Loss or Transition
 	if current_day >= max_days:
-		if reserve_bank >= 750:
-			trigger_game_over("VICTORY! SURVIVED THE WINTER!\nReserves: %d" % int(reserve_bank))
+		if reserve_bank >= win_reserve_target:
+			trigger_game_over("VICTORY! SURVIVED THE WINTER!\nReserves: %d PTS" % int(reserve_bank))
 		else:
-			trigger_game_over("WINTER CAME: STARVED!\nReserves: %d / 750" % int(reserve_bank))
+			trigger_game_over("WINTER CAME: STARVED!\nReserves: %d / %d PTS" % [int(reserve_bank), int(win_reserve_target)])
 	else:
 		day_splash.play_transition("NIGHT %d SURVIVED!\nPREPARE FOR NIGHT %d" % [current_day, current_day + 1])
 		await day_splash.splash_finished
 		
 		current_day += 1
 		start_next_day()
+
+func start_next_day() -> void:
+	time_remaining = night_duration_seconds
+	is_night_active = true
+	
+	# 1. Reset Vampy to starting spawn position
+	player.global_position = player_start_position
+	player.velocity = Vector2.ZERO
+	
+	# 2. Despawn all active NPCs from the previous night
+	get_tree().call_group("npcs", "queue_free")
+	
+	# 3. Re-trigger house spawners for the new day
+	# (Calls spawn logic on any spawner nodes in the 'spawners' group)
+	get_tree().call_group("spawners", "spawn_for_day", current_day)
+	
+	# 4. Refresh HUD
+	hud.update_day_display(current_day, max_days)
+	hud.update_blood_display(player.current_blood, player.max_blood)
+	
+	print("Night %d Started! Vampy reset to spawn." % current_day)
+
+func trigger_game_over(reason_text: String) -> void:
+	is_night_active = false
+	var display_title = "GAME OVER\n" + reason_text
+	day_splash.play_transition(display_title, true)

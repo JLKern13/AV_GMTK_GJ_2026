@@ -4,26 +4,28 @@ extends BaseNPC
 signal player_caught_by_police
 
 @export var chase_speed: float = 140.0
+# CatchArea is now on the root node, not inside VisionPivot!
+@onready var catch_area: Area2D = $CatchArea
 @onready var flashlight: PointLight2D = $VisionPivot/Flashlight
-@onready var catch_area: Area2D = $VisionPivot/CatchArea
 @onready var notifier: VisibleOnScreenNotifier2D = $VisionPivot/Flashlight/VisibleOnScreenNotifier2D
 
 func _ready() -> void:
 	super._ready()
-	blood_value = 35 # High reward if snuck up on!
-	drain_duration = 4.5 # Takes longer to eat
+	add_to_group("police") # Added to police group
+	blood_value = 35 
+	drain_duration = 4.5 
+	
 	notifier.screen_entered.connect(func(): flashlight.enabled = true)
 	notifier.screen_exited.connect(func(): flashlight.enabled = false)
 	flashlight.enabled = notifier.is_on_screen()
+	
 	catch_area.body_entered.connect(_on_catch_body_entered)
 
 func _physics_process(delta: float) -> void:
-	# Keep BaseNPC logic for IDLE, WANDER, BEING_EATEN
 	super._physics_process(delta)
 	
-	# Override CHASE / ALERT behavior
 	if current_state == State.ALERT and target_player:
-		animated_sprite.play("Walking") # Matches BaseNPC animation naming!
+		animated_sprite.play("Walking")
 		
 		var chase_direction = (target_player.global_position - global_position).normalized()
 		velocity = chase_direction * chase_speed
@@ -35,12 +37,10 @@ func _physics_process(delta: float) -> void:
 			
 		move_and_slide()
 
-# OVERRIDE: Cops see the player in their flashlight EVEN IN THE DARK!
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body is Player:
 		trigger_alert(body)
 
-# OVERRIDE: Redirect panic triggers (e.g. from BaseNPC calls) directly to ALERT
 func trigger_panic(player_node: Player) -> void:
 	trigger_alert(player_node)
 
@@ -61,6 +61,11 @@ func _on_catch_body_entered(body: Node2D) -> void:
 		if current_state == State.ALERT:
 			print("Busted! Cop caught Vampy!")
 			player_caught_by_police.emit()
+			
+			# FAILSAFE: Direct call to AlaskaTown game over sequence!
+			var main_scene = get_tree().current_scene
+			if main_scene.has_method("trigger_game_over"):
+				main_scene.trigger_game_over("BUSTED BY THE POLICE!")
 		else:
-			# If player bumps into flashlight/catch area in darkness while cop wanders, alert him immediately!
+			# If player bumps into cop body in darkness while wandering, alert him!
 			trigger_alert(body)
