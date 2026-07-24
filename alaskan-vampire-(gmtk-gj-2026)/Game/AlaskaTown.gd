@@ -19,6 +19,8 @@ var is_game_over_triggered: bool = false
 @onready var player: Player = $Player
 @onready var hud: HUD = $HUD
 @onready var day_splash: DaySplash = $HUD/DaySplash
+@onready var music_player: AudioStreamPlayer2D = $MusicPlayer
+
 
 func _ready() -> void:
 	player_start_position = player.global_position
@@ -32,6 +34,7 @@ func _ready() -> void:
 	hud.update_day_display(current_day, max_days)
 	hud.update_reserve_display(reserve_bank)
 	hud.update_blood_display(player.current_blood, player.max_blood)
+	music_player.play()
 
 func _process(delta: float) -> void:
 	if not is_night_active:
@@ -51,7 +54,7 @@ func _process(delta: float) -> void:
 
 func on_dawn_arrived() -> void:
 	is_night_active = false
-	
+	music_player.stop()
 	# 1. Daytime Starvation Check
 	if player.current_blood < sleep_cost:
 		trigger_game_over("VAMPY STARVED DURING THE DAY!")
@@ -89,7 +92,7 @@ func start_next_day() -> void:
 	# 1. Reset Vampy to starting spawn position
 	player.global_position = player_start_position
 	player.velocity = Vector2.ZERO
-	
+	music_player.play()
 	# 2. Despawn all active NPCs from the previous night
 	get_tree().call_group("npcs", "queue_free")
 	
@@ -104,6 +107,7 @@ func start_next_day() -> void:
 	print("Night %d Started! Vampy reset to spawn." % current_day)
 
 func trigger_game_over(reason_text: String) -> void:
+	music_player.stop()
 	if is_game_over_triggered:
 		return
 		

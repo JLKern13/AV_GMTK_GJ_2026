@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b7rg1rf6oc4cb" path="res://Game/DaySplash.gd" id="1_um8oe"]
 [ext_resource type="Texture2D" uid="uid://dau6cs5qwrwk0" path="res://Assets/Game/vampy sprite sunrise 1.00.png" id="2_38h7k"]
 [ext_resource type="AudioStream" uid="uid://ck2uxqaod7n7a" path="res://Assets/SFX/719773__jomungus__morning-rooster-crow.wav" id="3_38h7k"]
+[ext_resource type="AudioStream" uid="uid://cxdb4etov73x8" path="res://Assets/Music/444737__rokzroom__forlorn-figures-1.wav" id="4_p7qev"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p7qev"]
 atlas = ExtResource("2_38h7k")
@@ -167,3 +168,6 @@ theme_override_font_sizes/font_size = 32
 
 [node name="RoosterAudio" type="AudioStreamPlayer2D" parent="Control" unique_id=385615422]
 stream = ExtResource("3_38h7k")
+
+[node name="DaysplashMusicPlayer" type="AudioStreamPlayer2D" parent="Control" unique_id=388925593]
+stream = ExtResource("4_p7qev")

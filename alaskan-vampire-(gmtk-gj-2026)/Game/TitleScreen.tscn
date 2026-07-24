@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bifck4h6qgeff" path="res://Game/TitleScreen.gd" id="1_5xfog"]
 [ext_resource type="Texture2D" uid="uid://cy48mqrvhvuj3" path="res://Assets/Game/vampy sprite title screen 1.00.png" id="2_lppx8"]
-[ext_resource type="AudioStream" uid="uid://cxdb4etov73x8" path="res://Assets/Music/444737__rokzroom__forlorn-figures-1.wav" id="3_wbo61"]
+[ext_resource type="AudioStream" uid="uid://dqwys5scjuuqy" path="res://Assets/Music/Ghouls Night Out_60_converted.wav" id="3_wbo61"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wbo61"]
 atlas = ExtResource("2_lppx8")
