@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://drbaftgirgxub" path="res://Game/HUD.gd" id="1_tt7mc"]
 [ext_resource type="Texture2D" uid="uid://dvmdo5vx8xhen" path="res://Assets/Game/vampy blood 2.00.png" id="2_asbbg"]
+[ext_resource type="PackedScene" uid="uid://x78el1twrx7s" path="res://Game/DaySplash.tscn" id="3_yl612"]
 
 [node name="HUD" type="CanvasLayer" unique_id=1019856643]
 script = ExtResource("1_tt7mc")
@@ -45,3 +46,6 @@ layout_mode = 2
 [node name="TimeLabel" type="Label" parent="Control/TopRightContainer/VBoxContainer" unique_id=518253640]
 layout_mode = 2
 vertical_alignment = 2
+
+[node name="DaySplash" parent="." unique_id=1948218801 instance=ExtResource("3_yl612")]
+visible = false

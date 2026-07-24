@@ -3,7 +3,7 @@ extends Marker2D
 
 @export var civilian_scene: PackedScene
 @export var police_scene: PackedScene
-
+@export var max_total_npcs: int = 32 # Adjust based on map size!
 # How many seconds between spawns at this house
 @export var spawn_interval: float = 12.0 
 var spawn_timer: float = 0.0
@@ -11,12 +11,15 @@ var spawn_timer: float = 0.0
 func _process(delta: float) -> void:
 	# Only spawn during active gameplay nights
 	var town = get_tree().current_scene
+	var current_count = get_tree().get_nodes_in_group("npcs").size()
 	if not town or not town.is_night_active:
 		return
 		
 	spawn_timer -= delta
 	if spawn_timer <= 0.0:
 		spawn_timer = randf_range(spawn_interval * 0.8, spawn_interval * 1.2)
+		if current_count >= max_total_npcs:
+			return
 		spawn_human(town.current_day)
 
 func spawn_human(current_day: int) -> void:
@@ -31,6 +34,9 @@ func spawn_human(current_day: int) -> void:
 	var entity_to_spawn: BaseNPC
 	if randf() < cop_chance:
 		entity_to_spawn = police_scene.instantiate()
+		var town = get_tree().current_scene
+		if town and town.has_method("on_player_caught"):
+			entity_to_spawn.player_caught_by_police.connect(town.on_player_caught)
 	else:
 		entity_to_spawn = civilian_scene.instantiate()
 

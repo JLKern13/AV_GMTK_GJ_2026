@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://b41kfpwd5242c" path="res://Assets/Music/Scared_Silly_60s_version.wav" id="2_1lbcv"]
 [ext_resource type="PackedScene" uid="uid://ca8hwabrt2r3" path="res://Game/HUD.tscn" id="2_8ar4f"]
 [ext_resource type="Texture2D" uid="uid://ctmadibbm8axl" path="res://Assets/Game/snowy_tileset_zaph.png" id="3_1lbcv"]
-[ext_resource type="PackedScene" uid="uid://dh3kj3dde8apu" path="res://Game/streetlight.tscn" id="4_yjy7j"]
+[ext_resource type="PackedScene" uid="uid://dh3kj3dde8apu" path="res://Game/Streetlight.tscn" id="4_yjy7j"]
 [ext_resource type="PackedScene" uid="uid://difp1e6hu4b6j" path="res://Game/HouseSpawner.tscn" id="9_pi3qa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qqsc8"]
@@ -711,6 +711,7 @@ terrain_set_0/terrain_8/color = Color(0.46875, 0.25, 0.5, 1)
 sources/0 = SubResource("TileSetAtlasSource_qqsc8")
 
 [node name="AlaskaTown" type="Node2D" unique_id=1508851726]
+y_sort_enabled = true
 script = ExtResource("1_qqsc8")
 
 [node name="HUD" parent="." unique_id=1019856643 instance=ExtResource("2_8ar4f")]
@@ -728,7 +729,7 @@ volume_db = -6.0
 autoplay = true
 
 [node name="Player" parent="." unique_id=2138001670 instance=ExtResource("1_k0bx8")]
-position = Vector2(86, 65)
+position = Vector2(108, 87)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=836252012]
 zoom = Vector2(3, 3)
@@ -797,3 +798,6 @@ position = Vector2(152, 620)
 
 [node name="HouseSpawner8" parent="." unique_id=1805238165 instance=ExtResource("9_pi3qa")]
 position = Vector2(313, 396)
+
+[node name="StartingPoint" type="Marker2D" parent="." unique_id=354283646]
+position = Vector2(108, 87)

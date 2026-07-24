@@ -23,6 +23,6 @@ func update_reserve_display(reserve_amount: float) -> void:
 	reserve_label.text = "RESERVE: %d PTS" % int(reserve_amount)
 
 func update_time_display(seconds_remaining: float) -> void:
-	var minutes: int = int(seconds_remaining) / 60
+	var minutes: int = int(floor(seconds_remaining) / 60)
 	var seconds: int = int(seconds_remaining) % 60
 	time_label.text = "DAWN IN: %02d:%02d" % [minutes, seconds]

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://jsrfh5y23b32" path="res://Assets/Character Sprites/vampy sprite 1.00.png" id="2_2hwgi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o3jc3"]
-size = Vector2(14, 20)
+size = Vector2(14, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ww0jn"]
 atlas = ExtResource("2_2hwgi")
@@ -137,9 +137,11 @@ radius = 21.0
 script = ExtResource("1_hwohb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=227333729]
+position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_o3jc3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=571035253]
+position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_g3v6a")
 animation = &"Idle"
 

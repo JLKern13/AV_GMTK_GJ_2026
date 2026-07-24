@@ -1,9 +1,9 @@
 class_name Player
 extends BaseEntity
 
-signal blood_gained(amount: int)
+#signal blood_gained(amount: int)
 signal blood_changed(current_blood: float, max_blood: float)
-signal player_caught
+#signal player_caught
 
 @export var max_blood: float = 200.0
 @export var current_blood: float = 100.0
@@ -104,3 +104,10 @@ func take_damage(_damage_time_loss: int) -> void:
 	
 	await get_tree().create_timer(0.5).timeout
 	is_damaged = false
+
+func show_coffin_death() -> void:
+	# Disable movement & input
+	is_feeding = true 
+	velocity = Vector2.ZERO
+	
+	animated_sprite.play("Dead")

@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://dagir5w0vnrkh"]
+
+[ext_resource type="Script" uid="uid://bifck4h6qgeff" path="res://Game/TitleScreen.gd" id="1_5xfog"]
+[ext_resource type="Texture2D" uid="uid://cy48mqrvhvuj3" path="res://Assets/Game/vampy sprite title screen 1.00.png" id="2_lppx8"]
+[ext_resource type="AudioStream" uid="uid://cxdb4etov73x8" path="res://Assets/Music/444737__rokzroom__forlorn-figures-1.wav" id="3_wbo61"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbo61"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv2qx"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjf8t"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryqri"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n5uu"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqsgj"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmd7b"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0krk2"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xsie"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(144, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0e1a"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xr3x"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(48, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ta7s2"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djcv7"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6csiw"]
+atlas = ExtResource("2_lppx8")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oncup"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbo61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv2qx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjf8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryqri")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n5uu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqsgj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmd7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0krk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xsie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0e1a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5xr3x")
+}],
+"loop": false,
+"name": &"GameStart",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ta7s2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djcv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6csiw")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 2.0
+}]
+
+[node name="TitleScreen" type="Control" unique_id=1112079229]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_5xfog")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=263450994]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2046617573]
+position = Vector2(640.00006, 360.00003)
+scale = Vector2(15, 15)
+sprite_frames = SubResource("SpriteFrames_oncup")
+animation = &"Idle"
+
+[node name="IntroMusicPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1832700278]
+stream = ExtResource("3_wbo61")
+volume_db = 10.0
+autoplay = true
+
+[node name="StartPromptLabel" type="Label" parent="." unique_id=1812720093]
+layout_mode = 0
+offset_left = 341.0
+offset_right = 939.0
+offset_bottom = 97.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 48
+text = "Vampire Surival: Alaska"
+horizontal_alignment = 1
+vertical_alignment = 1

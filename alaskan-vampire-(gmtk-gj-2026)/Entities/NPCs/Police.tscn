@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dstpskofxbnwe" path="res://Assets/Character Sprites/vampy cop sprite 1.00.png" id="2_7a5yt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_06803"]
-size = Vector2(14, 24)
+size = Vector2(14, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2qurl"]
 atlas = ExtResource("2_7a5yt")
@@ -81,7 +81,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7a5yt"]
-size = Vector2(14, 24)
+size = Vector2(14, 10)
 
 [sub_resource type="Gradient" id="Gradient_06803"]
 offsets = PackedFloat32Array(0, 0.7617729)
@@ -101,10 +101,11 @@ script = ExtResource("1_06803")
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="." unique_id=685033708]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1807635943]
-position = Vector2(0, -2)
+position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_06803")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1948787439]
+position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_eec8w")
 animation = &"Walking"
 frame_progress = 0.62690014
@@ -112,7 +113,7 @@ frame_progress = 0.62690014
 [node name="HitboxArea" type="Area2D" parent="." unique_id=1719732654]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" unique_id=2134245981]
-position = Vector2(0, -2)
+position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_7a5yt")
 
 [node name="VisionPivot" type="Node2D" parent="." unique_id=1472591948]
@@ -136,5 +137,5 @@ rect = Rect2(-20, -20, 40, 40)
 [node name="CatchArea" type="Area2D" parent="VisionPivot" unique_id=1229682484]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionPivot/CatchArea" unique_id=995991290]
-position = Vector2(34, 0)
+position = Vector2(24, 0)
 shape = SubResource("CircleShape2D_yrc5y")

@@ -23,6 +23,7 @@ var state_timer: float = 0.0
 @onready var scream_player: AudioStreamPlayer2D = $SFXPlayer
 
 func _ready() -> void:
+	add_to_group("npcs")
 	move_speed = normal_speed
 	detection_area.body_entered.connect(_on_detection_body_entered)
 	detection_area.body_exited.connect(_on_detection_body_exited)

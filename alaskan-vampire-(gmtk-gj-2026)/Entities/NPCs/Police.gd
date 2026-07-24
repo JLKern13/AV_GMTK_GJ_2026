@@ -52,7 +52,7 @@ func trigger_alert(player_node: Player) -> void:
 	is_alert = true
 	target_player = player_node
 
-func alert_to_location(spot_position: Vector2, player_ref: Player) -> void:
+func alert_to_location(_spot_position: Vector2, player_ref: Player) -> void:
 	if current_state != State.BEING_EATEN:
 		trigger_alert(player_ref)
 
