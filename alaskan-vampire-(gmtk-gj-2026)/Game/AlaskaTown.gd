@@ -14,6 +14,7 @@ var reserve_bank: float = 0.0
 var time_remaining: float = 0.0
 var is_night_active: bool = true
 var player_start_position: Vector2 = Vector2.ZERO
+var is_game_over_triggered: bool = false
 
 @onready var player: Player = $Player
 @onready var hud: HUD = $HUD
@@ -103,6 +104,11 @@ func start_next_day() -> void:
 	print("Night %d Started! Vampy reset to spawn." % current_day)
 
 func trigger_game_over(reason_text: String) -> void:
+	if is_game_over_triggered:
+		return
+		
+	is_game_over_triggered = true
 	is_night_active = false
+	
 	var display_title = "GAME OVER\n" + reason_text
 	day_splash.play_transition(display_title, true)

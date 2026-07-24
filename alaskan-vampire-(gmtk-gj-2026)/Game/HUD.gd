@@ -24,7 +24,8 @@ func update_blood_display(current_blood: float, _max_blood: float = 230.0) -> vo
 	blood_sprite.frame = clamp(frame_index, 0, 22)
 
 func update_day_display(current_day: int, total_days: int = 10) -> void:
-	day_label.text = "DAY %02d / %02d" % [current_day, total_days]
+	var days_left = total_days - current_day
+	day_label.text = "DAYS LEFT - %02d" % [days_left]
 
 func update_reserve_display(reserve_amount: float) -> void:
 	reserve_label.text = "RESERVE: %d PTS" % int(reserve_amount)

@@ -7,6 +7,7 @@ signal player_caught_by_police
 @export var chase_duration: float = 5.0     # Seconds police will chase before giving up
 
 var chase_timer: float = 0.0
+var has_caught_player: bool = false
 
 @onready var catch_area: Area2D = $CatchArea
 @onready var flashlight: PointLight2D = $VisionPivot/Flashlight
@@ -25,27 +26,28 @@ func _ready() -> void:
 	catch_area.body_entered.connect(_on_catch_body_entered)
 
 func _physics_process(delta: float) -> void:
+	# BaseNPC handles IDLE, WANDER, PANIC, and BEING_EATEN states
 	super._physics_process(delta)
 	
-	# CHASE / ALERT behavior with timer
-	if current_state == State.ALERT and target_player:
+	# CHASE / ALERT behavior with timer (ONLY runs when actively chasing!)
+	if current_state == State.ALERT and target_player and is_instance_valid(target_player):
 		chase_timer -= delta
-		
-		# If timer runs out, cop gives up chase and returns to wandering
 		if chase_timer <= 0.0:
 			give_up_chase()
 			return
 
-		animated_sprite.play("Walking")
-		
 		var chase_direction = (target_player.global_position - global_position).normalized()
-		velocity = chase_direction * chase_speed
+		# Reuse the bounce helper function inherited from BaseNPC!
+		chase_direction = get_bounced_direction(chase_direction)
 		
-		if chase_direction.x < 0:
-			animated_sprite.flip_h = false
-		else:
-			animated_sprite.flip_h = true
-			
+		velocity = chase_direction * chase_speed
+		animated_sprite.flip_h = chase_direction.x >= 0
+	
+	#if chase_direction.x < 0:
+		#animated_sprite.flip_h = false
+	#else:
+		#animated_sprite.flip_h = true
+
 		move_and_slide()
 
 # Flashlight detection triggers the chase
@@ -82,6 +84,16 @@ func _on_catch_body_entered(body: Node2D) -> void:
 		_catch_player()
 
 func _catch_player() -> void:
+	# Prevent multi-triggering on subsequent frames
+	if has_caught_player:
+		return
+		
+	has_caught_player = true
+	
+	# Turn off catch area collision detection immediately
+	if catch_area:
+		catch_area.set_deferred("monitoring", false)
+		
 	print("Busted! Cop caught Vampy!")
 	player_caught_by_police.emit()
 	

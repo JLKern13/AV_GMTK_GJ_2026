@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cn5u3b8hjp04j" path="res://Entities/NPCs/BaseNPC.gd" id="1_714sj"]
 [ext_resource type="Texture2D" uid="uid://c8muwebymeyxa" path="res://Assets/Character Sprites/vampy vilager sprite 1.00.png" id="2_25mon"]
-[ext_resource type="AudioStream" uid="uid://sw0mmph6rdlo" path="res://Assets/SFX/Audio 1.mp3" id="2_xqb85"]
-[ext_resource type="AudioStream" uid="uid://csacencwyrkdd" path="res://Assets/SFX/Audio 2.mp3" id="3_o3snr"]
-[ext_resource type="AudioStream" uid="uid://cieuubqechrry" path="res://Assets/SFX/Audio 3.mp3" id="4_rs1a8"]
-[ext_resource type="AudioStream" uid="uid://cb8dg6fr536oc" path="res://Assets/SFX/Audio 4.mp3" id="5_v7tte"]
-[ext_resource type="AudioStream" uid="uid://cytgk3imj37dh" path="res://Assets/SFX/Audio 5.mp3" id="6_2orsc"]
+[ext_resource type="AudioStream" uid="uid://ymy8stj2i3vq" path="res://Assets/SFX/Audio 1.wav" id="2_xqb85"]
+[ext_resource type="AudioStream" uid="uid://d2o857fj83buv" path="res://Assets/SFX/Audio 2.wav" id="3_o3snr"]
+[ext_resource type="AudioStream" uid="uid://cssft2k3gam4r" path="res://Assets/SFX/Audio 3.wav" id="4_rs1a8"]
+[ext_resource type="AudioStream" uid="uid://50np37d2lt64" path="res://Assets/SFX/Audio 4.wav" id="5_v7tte"]
+[ext_resource type="AudioStream" uid="uid://g1t2p6hhsuh2" path="res://Assets/SFX/Audio 5.wav" id="6_2orsc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofjcl"]
 size = Vector2(14, 11)

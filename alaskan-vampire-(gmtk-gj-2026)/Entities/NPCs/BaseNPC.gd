@@ -19,8 +19,9 @@ var state_timer: float = 0.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var detection_area: Area2D = $VisionPivot/VisionCone
-@onready var vision_pivot: Node2D = $VisionPivot # Ensure your pivot node is named VisionPivot
+@onready var vision_pivot: Node2D = $VisionPivot 
 @onready var scream_player: AudioStreamPlayer2D = $SFXPlayer
+@onready var obstacle_ray: RayCast2D = $VisionPivot/RayCast2D
 
 func _ready() -> void:
 	add_to_group("npcs")
@@ -28,7 +29,6 @@ func _ready() -> void:
 	detection_area.body_entered.connect(_on_detection_body_entered)
 	detection_area.body_exited.connect(_on_detection_body_exited)
 	
-	# Start with a random state on spawn
 	pick_new_wander_state()
 
 func _physics_process(delta: float) -> void:
@@ -44,23 +44,23 @@ func _physics_process(delta: float) -> void:
 			animated_sprite.play("Idle")
 			
 		State.WANDER:
+			# Bounce wander_direction cleanly if hitting obstacles
+			wander_direction = get_bounced_direction(wander_direction)
 			velocity = wander_direction * normal_speed
+			
 			animated_sprite.play("Walking")
-			if wander_direction.x < 0:
-				animated_sprite.flip_h = false
-			else:
-				animated_sprite.flip_h = true
+			animated_sprite.flip_h = wander_direction.x >= 0
 			move_and_slide()
 			
 		State.PANIC:
 			animated_sprite.play("Panicking")
 			if target_player:
 				var flee_direction = (global_position - target_player.global_position).normalized()
+				# Bounce flee_direction so panicking NPCs don't run into walls
+				flee_direction = get_bounced_direction(flee_direction)
+				
 				velocity = flee_direction * panic_speed
-				if flee_direction.x < 0:
-					animated_sprite.flip_h = false
-				else:
-					animated_sprite.flip_h = true
+				animated_sprite.flip_h = flee_direction.x >= 0
 				move_and_slide()
 				
 		State.BEING_EATEN:
@@ -69,25 +69,33 @@ func _physics_process(delta: float) -> void:
 	# Smoothly update vision cone rotation ONLY when actively moving!
 	update_vision_cone_rotation(delta)
 
+# --- DRY HELPER FUNCTION FOR WALL BOUNCING ---
+func get_bounced_direction(current_dir: Vector2) -> Vector2:
+	if obstacle_ray.is_colliding() or is_on_wall():
+		var wall_normal = Vector2.ZERO
+		if obstacle_ray.is_colliding():
+			wall_normal = obstacle_ray.get_collision_normal()
+		elif is_on_wall():
+			wall_normal = get_wall_normal()
+			
+		if wall_normal != Vector2.ZERO:
+			return current_dir.bounce(wall_normal).normalized()
+			
+	return current_dir
+
 func update_vision_cone_rotation(delta: float) -> void:
 	if velocity.length() > 10.0:
 		var target_angle = velocity.angle()
-		
-		# UNCOMMENT THE LINE BELOW if your cone was drawn pointing UP in the editor:
-		# target_angle += deg_to_rad(90)
-		
 		vision_pivot.rotation = lerp_angle(vision_pivot.rotation, target_angle, 12.0 * delta)
 
 func pick_new_wander_state() -> void:
-	# Randomly choose between IDLE (pause) or WANDER (walk around)
 	if randf() > 0.4:
 		current_state = State.WANDER
-		# Pick a random direction vector
 		wander_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
-		state_timer = randf_range(2.0, 4.0) # Walk for 2-4 seconds
+		state_timer = randf_range(2.0, 4.0)
 	else:
 		current_state = State.IDLE
-		state_timer = randf_range(1.0, 3.0) # Pause for 1-3 seconds
+		state_timer = randf_range(1.0, 3.0)
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body is Player:
@@ -106,7 +114,6 @@ func trigger_panic(player_node: Player) -> void:
 	if current_state == State.BEING_EATEN:
 		return
 		
-	# ONLY trigger the scream if they were NOT already panicking!
 	if current_state != State.PANIC:
 		play_random_scream()
 
@@ -117,11 +124,8 @@ func play_random_scream() -> void:
 	if panic_screams.is_empty():
 		return
 		
-	# Pick a random audio clip from your fiancée's recordings!
 	var random_scream = panic_screams.pick_random()
-	
 	scream_player.stream = random_scream
-	# Slightly adjust pitch each time for extra natural variation (e.g., 0.9x to 1.1x speed/pitch)
 	scream_player.pitch_scale = randf_range(0.9, 1.1)
 	scream_player.play()
 
