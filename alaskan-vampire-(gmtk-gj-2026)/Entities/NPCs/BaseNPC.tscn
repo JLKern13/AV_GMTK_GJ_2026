@@ -87,7 +87,7 @@ size = Vector2(20, 21)
 script = ExtResource("1_714sj")
 panic_screams = Array[AudioStream]([null, null, null, null, null, null])
 
-[node name="ScreamPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1144079078]
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1144079078]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1882462880]
 position = Vector2(0, -0.5)

@@ -20,7 +20,7 @@ var state_timer: float = 0.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var detection_area: Area2D = $VisionPivot/VisionCone
 @onready var vision_pivot: Node2D = $VisionPivot # Ensure your pivot node is named VisionPivot
-@onready var scream_player: AudioStreamPlayer2D = $ScreamPlayer
+@onready var scream_player: AudioStreamPlayer2D = $SFXPlayer
 
 func _ready() -> void:
 	move_speed = normal_speed

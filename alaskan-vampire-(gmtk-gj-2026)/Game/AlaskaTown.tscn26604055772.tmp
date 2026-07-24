@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://uml4mr7qkudv" path="res://Game/AlaskaTown.gd" id="1_qqsc8"]
 [ext_resource type="AudioStream" uid="uid://b41kfpwd5242c" path="res://Assets/Music/Scared_Silly_60s_version.wav" id="2_1lbcv"]
 [ext_resource type="PackedScene" uid="uid://ca8hwabrt2r3" path="res://Game/HUD.tscn" id="2_8ar4f"]
+[ext_resource type="PackedScene" uid="uid://b5lx3kpnuh82k" path="res://Entities/NPCs/BaseNPC.tscn" id="2_yjy7j"]
 [ext_resource type="Texture2D" uid="uid://ctmadibbm8axl" path="res://Assets/Game/snowy_tileset_zaph.png" id="3_1lbcv"]
 [ext_resource type="PackedScene" uid="uid://dh3kj3dde8apu" path="res://Game/streetlight.tscn" id="4_yjy7j"]
-[ext_resource type="PackedScene" uid="uid://difp1e6hu4b6j" path="res://Game/HouseSpawner.tscn" id="9_pi3qa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qqsc8"]
 texture = ExtResource("3_1lbcv")
@@ -744,6 +744,36 @@ drag_top_margin = 0.25
 drag_right_margin = 0.25
 drag_bottom_margin = 0.25
 
+[node name="BaseNPC" parent="." unique_id=1769980847 instance=ExtResource("2_yjy7j")]
+position = Vector2(239, 82)
+
+[node name="BaseNPC2" parent="." unique_id=1100345138 instance=ExtResource("2_yjy7j")]
+position = Vector2(190, 192)
+
+[node name="BaseNPC3" parent="." unique_id=1997961920 instance=ExtResource("2_yjy7j")]
+position = Vector2(371, 162)
+
+[node name="BaseNPC4" parent="." unique_id=1069287921 instance=ExtResource("2_yjy7j")]
+position = Vector2(879, 269)
+
+[node name="BaseNPC5" parent="." unique_id=278210478 instance=ExtResource("2_yjy7j")]
+position = Vector2(679, 248)
+
+[node name="BaseNPC6" parent="." unique_id=1076788861 instance=ExtResource("2_yjy7j")]
+position = Vector2(987, 377)
+
+[node name="BaseNPC7" parent="." unique_id=169391766 instance=ExtResource("2_yjy7j")]
+position = Vector2(84, 412)
+
+[node name="BaseNPC8" parent="." unique_id=355782594 instance=ExtResource("2_yjy7j")]
+position = Vector2(317, 504)
+
+[node name="BaseNPC9" parent="." unique_id=999619215 instance=ExtResource("2_yjy7j")]
+position = Vector2(426, 565)
+
+[node name="BaseNPC10" parent="." unique_id=1585938862 instance=ExtResource("2_yjy7j")]
+position = Vector2(793, 603)
+
 [node name="Streetlight" parent="." unique_id=2129420608 instance=ExtResource("4_yjy7j")]
 position = Vector2(408, 158)
 
@@ -773,27 +803,3 @@ position = Vector2(119, 220)
 
 [node name="Streetlight10" parent="." unique_id=1289467683 instance=ExtResource("4_yjy7j")]
 position = Vector2(939, 541)
-
-[node name="HouseSpawner" parent="." unique_id=1094482756 instance=ExtResource("9_pi3qa")]
-position = Vector2(104, 204)
-
-[node name="HouseSpawner2" parent="." unique_id=1475493537 instance=ExtResource("9_pi3qa")]
-position = Vector2(601, 173)
-
-[node name="HouseSpawner3" parent="." unique_id=1168642637 instance=ExtResource("9_pi3qa")]
-position = Vector2(952, 108)
-
-[node name="HouseSpawner4" parent="." unique_id=53256577 instance=ExtResource("9_pi3qa")]
-position = Vector2(776, 412)
-
-[node name="HouseSpawner5" parent="." unique_id=468835131 instance=ExtResource("9_pi3qa")]
-position = Vector2(952, 652)
-
-[node name="HouseSpawner6" parent="." unique_id=1980765524 instance=ExtResource("9_pi3qa")]
-position = Vector2(568, 620)
-
-[node name="HouseSpawner7" parent="." unique_id=41094773 instance=ExtResource("9_pi3qa")]
-position = Vector2(152, 620)
-
-[node name="HouseSpawner8" parent="." unique_id=1805238165 instance=ExtResource("9_pi3qa")]
-position = Vector2(313, 396)

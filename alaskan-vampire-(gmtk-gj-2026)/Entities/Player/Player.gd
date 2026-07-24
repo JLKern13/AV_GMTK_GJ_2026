@@ -5,7 +5,7 @@ signal blood_gained(amount: int)
 signal blood_changed(current_blood: float, max_blood: float)
 signal player_caught
 
-@export var max_blood: float = 100.0
+@export var max_blood: float = 200.0
 @export var current_blood: float = 100.0
 @export var blood_drain_rate: float = 2.0 # Drains 2 blood per second
 

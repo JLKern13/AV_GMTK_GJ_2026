@@ -34,6 +34,9 @@ texture = ExtResource("2_iiilr")
 scale = Vector2(3, 3)
 texture = SubResource("GradientTexture2D_i73t3")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Streetlight/PointLight2D" unique_id=1877691933]
+rect = Rect2(-32, -32, 64, 64)
+
 [node name="LightZone" type="Area2D" parent="Streetlight" unique_id=148739678]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Streetlight/LightZone" unique_id=20121762]

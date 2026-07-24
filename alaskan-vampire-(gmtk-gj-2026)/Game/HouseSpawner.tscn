@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://difp1e6hu4b6j"]
+
+[ext_resource type="Script" uid="uid://0nbt0di7yuqr" path="res://Game/HouseSpawner.gd" id="1_n0u34"]
+[ext_resource type="PackedScene" uid="uid://b5lx3kpnuh82k" path="res://Entities/NPCs/BaseNPC.tscn" id="2_uo3pm"]
+[ext_resource type="PackedScene" uid="uid://kf2oinr066uw" path="res://Entities/NPCs/Police.tscn" id="3_jf6a3"]
+
+[node name="HouseSpawner" type="Marker2D" unique_id=1094482756]
+script = ExtResource("1_n0u34")
+civilian_scene = ExtResource("2_uo3pm")
+police_scene = ExtResource("3_jf6a3")
