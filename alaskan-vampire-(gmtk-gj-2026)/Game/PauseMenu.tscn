@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dbanfkhvavay1"]
+
+[ext_resource type="Script" uid="uid://cmycw0ivtrrpa" path="res://Game/PauseMenu.gd" id="1_nov15"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1391328209]
+process_mode = 3
+script = ExtResource("1_nov15")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=981282595]
+modulate = Color(0, 0, 0, 0.49803922)
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=800786240]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 64
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1

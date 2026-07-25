@@ -1,56 +1,56 @@
 [gd_scene format=3 uid="uid://b5lx3kpnuh82k"]
 
 [ext_resource type="Script" uid="uid://cn5u3b8hjp04j" path="res://Entities/NPCs/BaseNPC.gd" id="1_714sj"]
-[ext_resource type="Texture2D" uid="uid://c8muwebymeyxa" path="res://Assets/Character Sprites/vampy vilager sprite 1.00.png" id="2_25mon"]
 [ext_resource type="AudioStream" uid="uid://ymy8stj2i3vq" path="res://Assets/SFX/Audio 1.wav" id="2_xqb85"]
 [ext_resource type="AudioStream" uid="uid://d2o857fj83buv" path="res://Assets/SFX/Audio 2.wav" id="3_o3snr"]
 [ext_resource type="AudioStream" uid="uid://cssft2k3gam4r" path="res://Assets/SFX/Audio 3.wav" id="4_rs1a8"]
 [ext_resource type="AudioStream" uid="uid://50np37d2lt64" path="res://Assets/SFX/Audio 4.wav" id="5_v7tte"]
 [ext_resource type="AudioStream" uid="uid://g1t2p6hhsuh2" path="res://Assets/SFX/Audio 5.wav" id="6_2orsc"]
+[ext_resource type="Texture2D" uid="uid://ct1bt8hpebfq0" path="res://Assets/Character Sprites/vampy vilager girl sprite 1.00.png" id="7_xqb85"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofjcl"]
 size = Vector2(14, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q4fcj"]
-atlas = ExtResource("2_25mon")
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3snr"]
+atlas = ExtResource("7_xqb85")
 region = Rect2(0, 48, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hr7vm"]
-atlas = ExtResource("2_25mon")
-region = Rect2(48, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hirdx"]
-atlas = ExtResource("2_25mon")
-region = Rect2(96, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xqb85"]
-atlas = ExtResource("2_25mon")
-region = Rect2(0, 96, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o3snr"]
-atlas = ExtResource("2_25mon")
-region = Rect2(0, 0, 48, 48)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_rs1a8"]
-atlas = ExtResource("2_25mon")
-region = Rect2(48, 0, 48, 48)
+atlas = ExtResource("7_xqb85")
+region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7tte"]
-atlas = ExtResource("2_25mon")
-region = Rect2(0, 0, 48, 48)
+atlas = ExtResource("7_xqb85")
+region = Rect2(96, 48, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2orsc"]
-atlas = ExtResource("2_25mon")
+atlas = ExtResource("7_xqb85")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bn8sg"]
+atlas = ExtResource("7_xqb85")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvu4p"]
+atlas = ExtResource("7_xqb85")
 region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_833hd"]
+atlas = ExtResource("7_xqb85")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itpqm"]
+atlas = ExtResource("7_xqb85")
+region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bn8sg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q4fcj")
+"texture": SubResource("AtlasTexture_o3snr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hr7vm")
+"texture": SubResource("AtlasTexture_rs1a8")
 }],
 "loop": true,
 "name": &"Idle",
@@ -58,10 +58,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hirdx")
+"texture": SubResource("AtlasTexture_v7tte")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xqb85")
+"texture": SubResource("AtlasTexture_2orsc")
 }],
 "loop": true,
 "name": &"Panicking",
@@ -69,16 +69,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_o3snr")
+"texture": SubResource("AtlasTexture_bn8sg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rs1a8")
+"texture": SubResource("AtlasTexture_fvu4p")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v7tte")
+"texture": SubResource("AtlasTexture_833hd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2orsc")
+"texture": SubResource("AtlasTexture_itpqm")
 }],
 "loop": true,
 "name": &"Walking",
@@ -101,7 +101,7 @@ shape = SubResource("RectangleShape2D_ofjcl")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=880376257]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_bn8sg")
-animation = &"Idle"
+animation = &"Walking"
 
 [node name="VisionPivot" type="Node2D" parent="." unique_id=1252162196]
 

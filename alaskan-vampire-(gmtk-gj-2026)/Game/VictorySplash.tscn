@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://cb6gi2sgvx72e"]
+
+[ext_resource type="Texture2D" uid="uid://dau6cs5qwrwk0" path="res://Assets/Game/vampy sprite sunrise 1.00.png" id="1_gkdbd"]
+[ext_resource type="AudioStream" uid="uid://ck2uxqaod7n7a" path="res://Assets/SFX/719773__jomungus__morning-rooster-crow.wav" id="2_1d158"]
+[ext_resource type="AudioStream" uid="uid://3llmva3hd856" path="res://Assets/SFX/843046__silverillusionist__victory-fanfare-8-bit-thunder-4.wav" id="3_7skcr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7qev"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qt27q"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5mkc"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bp3u5"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cghpp"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovoy1"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bc30y"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4rjk"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvdun"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wegy4"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgwg3"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32wa2"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(144, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ae8u0"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5qxn"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(48, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv4s7"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(96, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8csw"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(144, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tv75d"]
+atlas = ExtResource("1_gkdbd")
+region = Rect2(0, 192, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xaapy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p7qev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qt27q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5mkc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bp3u5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cghpp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovoy1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bc30y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4rjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvdun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wegy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgwg3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32wa2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ae8u0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5qxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fv4s7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8csw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tv75d")
+}],
+"loop": false,
+"name": &"Sunrise",
+"speed": 5.0
+}]
+
+[node name="VictorySplash" type="CanvasLayer" unique_id=874938703]
+
+[node name="Control" type="Control" parent="." unique_id=1183653722]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1225187546]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control" unique_id=1759309531]
+position = Vector2(640, 360)
+scale = Vector2(15, 15)
+sprite_frames = SubResource("SpriteFrames_xaapy")
+animation = &"Sunrise"
+
+[node name="StatusLabel" type="Label" parent="Control" unique_id=942873313]
+layout_mode = 0
+offset_left = 336.0
+offset_top = 85.0
+offset_right = 946.0
+offset_bottom = 371.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+
+[node name="RoosterAudio" type="AudioStreamPlayer2D" parent="Control" unique_id=655648333]
+stream = ExtResource("2_1d158")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="Control" unique_id=1409960900]
+stream = ExtResource("3_7skcr")

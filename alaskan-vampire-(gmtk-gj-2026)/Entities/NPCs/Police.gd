@@ -12,6 +12,8 @@ var has_caught_player: bool = false
 @onready var catch_area: Area2D = $CatchArea
 @onready var flashlight: PointLight2D = $VisionPivot/Flashlight
 @onready var notifier: VisibleOnScreenNotifier2D = $VisionPivot/Flashlight/VisibleOnScreenNotifier2D
+@onready var sfx_player: AudioStreamPlayer2D = $SFXPlayer
+
 
 func _ready() -> void:
 	super._ready()
@@ -61,12 +63,11 @@ func trigger_panic(player_node: Player) -> void:
 func trigger_alert(player_node: Player) -> void:
 	if current_state == State.BEING_EATEN:
 		return
-		
 	current_state = State.ALERT
 	is_alert = true
 	target_player = player_node
 	chase_timer = chase_duration # Reset 5-second chase clock
-	
+	sfx_player.play()
 	# If player was caught inside catch_area when beam hit them, bust them immediately
 	if catch_area and catch_area.overlaps_body(player_node):
 		_catch_player()
@@ -75,6 +76,7 @@ func give_up_chase() -> void:
 	current_state = State.IDLE
 	is_alert = false
 	target_player = null
+	sfx_player.stop()
 	pick_new_wander_state() # Resets back to routine IDLE / WANDER
 
 func _on_catch_body_entered(body: Node2D) -> void:
@@ -86,7 +88,7 @@ func _on_catch_body_entered(body: Node2D) -> void:
 func _catch_player() -> void:
 	if has_caught_player:
 		return
-		
+	sfx_player.stop()
 	var main_scene = get_tree().current_scene
 	
 	# Safety Check: Don't trigger a catch if dawn has already broken!

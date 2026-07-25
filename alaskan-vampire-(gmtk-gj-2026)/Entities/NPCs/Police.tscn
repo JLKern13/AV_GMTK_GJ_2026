@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckrbxrp4yb0aa" path="res://Entities/NPCs/Police.gd" id="1_06803"]
 [ext_resource type="Texture2D" uid="uid://dstpskofxbnwe" path="res://Assets/Character Sprites/vampy cop sprite 1.00.png" id="2_7a5yt"]
+[ext_resource type="AudioStream" uid="uid://co3ael0cdfghg" path="res://Assets/SFX/240207__thedoctorgoat__police_siren_final.wav" id="2_yrc5y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_06803"]
 size = Vector2(14, 10)
@@ -100,6 +101,8 @@ fill_to = Vector2(0.83475786, 0.15384616)
 script = ExtResource("1_06803")
 
 [node name="SFXPlayer" type="AudioStreamPlayer2D" parent="." unique_id=685033708]
+stream = ExtResource("2_yrc5y")
+volume_db = -5.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1807635943]
 position = Vector2(0, -5)
