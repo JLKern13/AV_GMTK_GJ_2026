@@ -20,7 +20,7 @@ var is_game_over_triggered: bool = false
 @onready var hud: HUD = $HUD
 @onready var day_splash: DaySplash = $HUD/DaySplash
 @onready var music_player: AudioStreamPlayer2D = $MusicPlayer
-
+@onready var stamina_bar: ProgressBar = $HUD/StaminaBar
 
 func _ready() -> void:
 	player_start_position = player.global_position
@@ -29,7 +29,8 @@ func _ready() -> void:
 	
 	player.max_blood = MAX_BLOOD
 	player.current_blood = NEUTRAL_BLOOD
-	
+	if player and stamina_bar:
+		player.stamina_updated.connect(_on_player_stamina_updated)
 	player.blood_changed.connect(hud.update_blood_display)
 	hud.update_day_display(current_day, max_days)
 	hud.update_reserve_display(reserve_bank)
@@ -51,6 +52,10 @@ func _process(delta: float) -> void:
 	
 	if time_remaining <= 0.0:
 		on_dawn_arrived()
+
+func _on_player_stamina_updated(current: float, maximum: float) -> void:
+	stamina_bar.max_value = maximum
+	stamina_bar.value = current
 
 func on_dawn_arrived() -> void:
 	is_night_active = false

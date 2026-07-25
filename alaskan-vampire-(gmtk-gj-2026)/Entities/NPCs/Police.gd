@@ -56,6 +56,7 @@ func _physics_process(delta: float) -> void:
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body is Player:
 		trigger_alert(body)
+		sfx_player.play()
 
 func trigger_panic(player_node: Player) -> void:
 	trigger_alert(player_node)
@@ -67,7 +68,6 @@ func trigger_alert(player_node: Player) -> void:
 	is_alert = true
 	target_player = player_node
 	chase_timer = chase_duration # Reset 5-second chase clock
-	sfx_player.play()
 	# If player was caught inside catch_area when beam hit them, bust them immediately
 	if catch_area and catch_area.overlaps_body(player_node):
 		_catch_player()

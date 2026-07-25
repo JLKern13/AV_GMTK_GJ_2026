@@ -4,8 +4,41 @@
 [ext_resource type="Texture2D" uid="uid://dvmdo5vx8xhen" path="res://Assets/Game/vampy blood 2.00.png" id="2_asbbg"]
 [ext_resource type="PackedScene" uid="uid://x78el1twrx7s" path="res://Game/DaySplash.tscn" id="3_yl612"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl612"]
+bg_color = Color(0.2123048, 0.21230489, 0.21230471, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.12156863, 0.12156863, 0.7529412)
+corner_radius_top_left = 6
+corner_radius_top_right = 2
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgy6a"]
+bg_color = Color(1, 0.12156863, 0.12156863, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4392157, 0.4392157, 0.4392157, 0.7529412)
+corner_radius_top_left = 6
+corner_radius_top_right = 2
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 2
+
 [node name="HUD" type="CanvasLayer" unique_id=1019856643]
 script = ExtResource("1_tt7mc")
+
+[node name="StaminaBar" type="ProgressBar" parent="." unique_id=1982102635]
+offset_left = 4.0
+offset_top = 59.0
+offset_right = 115.0
+offset_bottom = 72.0
+theme_override_styles/background = SubResource("StyleBoxFlat_yl612")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bgy6a")
+show_percentage = false
 
 [node name="Control" type="Control" parent="." unique_id=511256692]
 layout_mode = 3
@@ -15,8 +48,8 @@ offset_bottom = 40.0
 
 [node name="TopLeftContainer" type="MarginContainer" parent="Control" unique_id=187393472]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 125.0
+offset_bottom = 60.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/TopLeftContainer" unique_id=1609519992]
 layout_mode = 2
