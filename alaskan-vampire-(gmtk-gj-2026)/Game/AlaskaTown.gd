@@ -42,7 +42,7 @@ func _process(delta: float) -> void:
 		
 	# Starvation Check in Night
 	if player.current_blood <= 0.0:
-		trigger_game_over("VAMPY STARVED IN THE NIGHT!")
+		trigger_game_over("VAMPY STARVED IN THE NIGHT!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [int(current_day-1), int(reserve_bank), int(win_reserve_target)])
 		return
 		
 	time_remaining -= delta
@@ -54,17 +54,24 @@ func _process(delta: float) -> void:
 
 func on_dawn_arrived() -> void:
 	is_night_active = false
-	music_player.stop()
+	
+	if player and player.has_method("cancel_feeding"):
+		player.cancel_feeding()
+	
+	# IMMEDIATELY clear active NPCs when dawn breaks so cops can't catch Vampy during splash!
+	get_tree().call_group("npcs", "queue_free")
+	
 	# 1. Daytime Starvation Check
 	if player.current_blood < sleep_cost:
-		trigger_game_over("VAMPY STARVED DURING THE DAY!")
+		trigger_game_over("VAMPY STARVED DURING THE DAY!\nNights Survived: %d\nFinal Reserves: %d PTS" % [int(current_day - 1), int(reserve_bank)])
 		return
 		
-	# 2. Reserve Banking: Anything over 160 blood goes into reserves
+	# 2. Reserve Banking Calculation
+	var surplus_banked: float = 0.0
 	if player.current_blood > RESERVE_THRESHOLD:
-		var surplus: float = player.current_blood - RESERVE_THRESHOLD
-		reserve_bank += surplus
-		player.current_blood = RESERVE_THRESHOLD # Cap at 160 so after sleep cost they start at 90 neutral
+		surplus_banked = player.current_blood - RESERVE_THRESHOLD
+		reserve_bank += surplus_banked
+		player.current_blood = RESERVE_THRESHOLD # Cap at 160 so Vampy wakes at 90 neutral
 		
 	# 3. Deduct Daytime Sleep Cost
 	player.current_blood -= sleep_cost
@@ -72,14 +79,23 @@ func on_dawn_arrived() -> void:
 	hud.update_reserve_display(reserve_bank)
 	hud.update_blood_display(player.current_blood, player.max_blood)
 	
-	# 4. Check Win/Loss or Transition
+	# 4. Check Win / Loss / Transition
 	if current_day >= max_days:
 		if reserve_bank >= win_reserve_target:
-			trigger_game_over("VICTORY! SURVIVED THE WINTER!\nReserves: %d PTS" % int(reserve_bank))
+			trigger_game_over("VICTORY! SURVIVED THE WINTER!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [int(current_day), int(reserve_bank), int(win_reserve_target)])
 		else:
-			trigger_game_over("WINTER CAME: STARVED!\nReserves: %d / %d PTS" % [int(reserve_bank), int(win_reserve_target)])
+			trigger_game_over("WINTER CAME: STARVED!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [int(current_day), int(reserve_bank), int(win_reserve_target)])
 	else:
-		day_splash.play_transition("NIGHT %d SURVIVED!\nPREPARE FOR NIGHT %d" % [current_day, current_day + 1])
+		# Detailed Nightly Report Splash
+		var splash_text: String = "NIGHT %d SURVIVED!\n\nBanked Tonight: +%d PTS\nTotal Reserves: %d / %d PTS\n\nPREPARE FOR NIGHT %d" % [
+			current_day,
+			int(surplus_banked),
+			int(reserve_bank),
+			int(win_reserve_target),
+			current_day + 1
+		]
+		
+		day_splash.play_transition(splash_text)
 		await day_splash.splash_finished
 		
 		current_day += 1
@@ -93,18 +109,24 @@ func start_next_day() -> void:
 	player.global_position = player_start_position
 	player.velocity = Vector2.ZERO
 	music_player.play()
-	# 2. Despawn all active NPCs from the previous night
-	get_tree().call_group("npcs", "queue_free")
-	
-	# 3. Re-trigger house spawners for the new day
-	# (Calls spawn logic on any spawner nodes in the 'spawners' group)
+
+	# 2. Re-trigger house spawners for the new day
 	get_tree().call_group("spawners", "spawn_for_day", current_day)
 	
-	# 4. Refresh HUD
+	# 3. Refresh HUD
 	hud.update_day_display(current_day, max_days)
 	hud.update_blood_display(player.current_blood, player.max_blood)
 	
 	print("Night %d Started! Vampy reset to spawn." % current_day)
+
+# HELPER: Formats police bust screen with stats
+func trigger_busted_game_over() -> void:
+	var busted_text: String = "BUSTED BY THE POLICE!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [
+		int(current_day - 1),
+		int(reserve_bank),
+		int(win_reserve_target)
+	]
+	trigger_game_over(busted_text)
 
 func trigger_game_over(reason_text: String) -> void:
 	music_player.stop()

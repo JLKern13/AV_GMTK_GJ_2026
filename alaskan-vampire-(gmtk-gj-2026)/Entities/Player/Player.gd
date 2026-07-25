@@ -11,6 +11,7 @@ signal blood_changed(current_blood: float, max_blood: float)
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $AttackArea
+@onready var bat_sfx_player: AudioStreamPlayer2D = $BatSFXPlayer
 
 var is_feeding: bool = false
 var is_damaged: bool = false
@@ -77,31 +78,42 @@ func try_feed() -> void:
 			break
 
 func start_feeding(target_npc: BaseNPC) -> void:
+	if not is_instance_valid(target_npc):
+		return
+
 	is_feeding = true
 	velocity = Vector2.ZERO
 	animated_sprite.play("Feeding")
+	bat_sfx_player.play()
 	
 	target_npc.on_being_eaten()	
 	await get_tree().create_timer(target_npc.drain_duration).timeout
 	
-	if is_feeding:
-		# Reward the player with blood and update HUD!
+	# RACE CONDITION FIX: Verify target_npc wasn't freed by dawn despawning during the await!
+	if is_feeding and is_instance_valid(target_npc):
 		add_blood(target_npc.blood_value)
-		
 		target_npc.queue_free()
-		is_feeding = false
+		
+	# Always reset state & animation cleanly
+	is_feeding = false
+	if animated_sprite and animated_sprite.animation == "Feeding":
+		bat_sfx_player.stop()
 		animated_sprite.play("Idle")
+
+func cancel_feeding() -> void:
+	is_feeding = false
+	if animated_sprite and animated_sprite.animation == "Feeding":
+		animated_sprite.play("Idle")
+		bat_sfx_player.stop()
 
 func take_damage(_damage_time_loss: int) -> void:
 	if is_damaged:
 		return
-		
 	is_damaged = true
 	is_feeding = false # Interrupt feeding if shot/hit
 	animated_sprite.play("Damaged")
 	
 	# Knock off blood/time budget here
-	
 	await get_tree().create_timer(0.5).timeout
 	is_damaged = false
 
@@ -109,5 +121,4 @@ func show_coffin_death() -> void:
 	# Disable movement & input
 	is_feeding = true 
 	velocity = Vector2.ZERO
-	
 	animated_sprite.play("Dead")

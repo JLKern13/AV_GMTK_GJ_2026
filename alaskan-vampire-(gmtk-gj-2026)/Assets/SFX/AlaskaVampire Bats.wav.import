@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://186ljtvls00b"
+path="res://.godot/imported/AlaskaVampire Bats.wav-14b2520c9cf1e3ca5a22458aeca58c9b.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/AlaskaVampire Bats.wav"
+dest_files=["res://.godot/imported/AlaskaVampire Bats.wav-14b2520c9cf1e3ca5a22458aeca58c9b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=1
+edit/loop_end=-1
+compress/mode=2

@@ -84,19 +84,25 @@ func _on_catch_body_entered(body: Node2D) -> void:
 		_catch_player()
 
 func _catch_player() -> void:
-	# Prevent multi-triggering on subsequent frames
 	if has_caught_player:
+		return
+		
+	var main_scene = get_tree().current_scene
+	
+	# Safety Check: Don't trigger a catch if dawn has already broken!
+	if main_scene and "is_night_active" in main_scene and not main_scene.is_night_active:
 		return
 		
 	has_caught_player = true
 	
-	# Turn off catch area collision detection immediately
 	if catch_area:
 		catch_area.set_deferred("monitoring", false)
 		
 	print("Busted! Cop caught Vampy!")
 	player_caught_by_police.emit()
 	
-	var main_scene = get_tree().current_scene
-	if main_scene and main_scene.has_method("trigger_game_over"):
-		main_scene.trigger_game_over("BUSTED BY THE POLICE!")
+	if main_scene:
+		if main_scene.has_method("trigger_busted_game_over"):
+			main_scene.trigger_busted_game_over()
+		elif main_scene.has_method("trigger_game_over"):
+			main_scene.trigger_game_over("BUSTED BY THE POLICE!")

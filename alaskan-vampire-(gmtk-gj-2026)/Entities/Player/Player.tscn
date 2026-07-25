@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b5po6e8dy3gr" path="res://Entities/Player/Player.gd" id="1_hwohb"]
 [ext_resource type="Texture2D" uid="uid://jsrfh5y23b32" path="res://Assets/Character Sprites/vampy sprite 1.00.png" id="2_2hwgi"]
+[ext_resource type="AudioStream" uid="uid://186ljtvls00b" path="res://Assets/SFX/AlaskaVampire Bats.wav" id="3_vweq0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o3jc3"]
 size = Vector2(14, 10)
@@ -150,3 +151,7 @@ animation = &"Idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=785059190]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_o3jc3")
+
+[node name="BatSFXPlayer" type="AudioStreamPlayer2D" parent="." unique_id=774559329]
+stream = ExtResource("3_vweq0")
+volume_db = 8.0

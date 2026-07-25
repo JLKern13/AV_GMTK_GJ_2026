@@ -9,6 +9,7 @@ var current_state: State = State.IDLE
 @export var panic_speed: float = 80.0
 @export var normal_speed: float = 40.0
 @export var panic_screams: Array[AudioStream] = []
+@export var panic_spread_radius: float = 140.0 # Distance panic/screams travel
 
 var is_alert: bool = false
 var target_player: Player = null
@@ -105,7 +106,7 @@ func _on_detection_body_entered(body: Node2D) -> void:
 func _on_detection_body_exited(body: Node2D) -> void:
 	if body is Player and target_player == body:
 		if current_state == State.PANIC:
-			await get_tree().create_timer(2.0).timeout
+			await get_tree().create_timer(randf_range(2.5,4.5)).timeout
 			if current_state == State.PANIC:
 				pick_new_wander_state()
 				target_player = null
@@ -114,11 +115,36 @@ func trigger_panic(player_node: Player) -> void:
 	if current_state == State.BEING_EATEN:
 		return
 		
-	if current_state != State.PANIC:
-		play_random_scream()
-
+	var was_panicking: bool = (current_state == State.PANIC)
+	
 	current_state = State.PANIC
 	target_player = player_node
+
+	# Only play scream and spread panic ONCE when initially entering panic!
+	if not was_panicking:
+		play_random_scream()
+		spread_panic(player_node)
+
+func spread_panic(player_node: Player) -> void:
+	if not player_node:
+		return
+		
+	# Find all active NPCs on the map
+	var all_npcs = get_tree().get_nodes_in_group("npcs")
+	for npc in all_npcs:
+		if npc == self or not is_instance_valid(npc):
+			continue
+			
+		var dist = global_position.distance_to(npc.global_position)
+		if dist <= panic_spread_radius:
+			# If it's a cop, tip them off to Vampy's location!
+			if npc is Police:
+				if npc.current_state != State.ALERT:
+					npc.trigger_alert(player_node)
+			# If it's another civilian, pass the panic forward!
+			elif npc is BaseNPC:
+				if npc.current_state != State.PANIC:
+					npc.trigger_panic(player_node)
 
 func play_random_scream() -> void:
 	if panic_screams.is_empty():
