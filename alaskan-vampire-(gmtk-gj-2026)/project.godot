@@ -13,7 +13,7 @@ config_version=5
 config/name="Alaskan Vampire (GMTK GJ 2026)"
 run/main_scene="uid://dagir5w0vnrkh"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://ce4d6s0tbda2m"
 
 [autoload]
 
