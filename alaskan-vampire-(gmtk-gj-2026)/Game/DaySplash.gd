@@ -34,4 +34,4 @@ func play_transition(message_text: String, is_game_over: bool = false) -> void:
 	
 	if is_game_over:
 		# Return back to the Title Screen after Game Over
-		get_tree().change_scene_to_file("res://Game/TitleScreen.tscn")
+		get_tree().change_scene_to_file("res://Game/StoreScreen.tscn")

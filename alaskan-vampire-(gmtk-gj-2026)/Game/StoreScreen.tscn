@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://djud3gjbeevj4"]
+
+[ext_resource type="Script" uid="uid://de3c5rf5h6j1f" path="res://Game/StoreScreen.gd" id="1_tkhct"]
+[ext_resource type="Texture2D" uid="uid://bmc53tp5cndk7" path="res://Assets/Game/vampy sprite win screen 1.00.png" id="2_r6l8v"]
+
+[node name="StoreScreen" type="Control" unique_id=1601648534]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_tkhct")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=628639976]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=587805716]
+position = Vector2(639.4999, 359.99994)
+scale = Vector2(15, 15)
+texture = ExtResource("2_r6l8v")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=796336993]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 719.0
+alignment = 1
+
+[node name="CoinsLabel" type="Label" parent="VBoxContainer" unique_id=875516742]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 64
+text = "------TOTAL SOUL COINS: 0------"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer" unique_id=1836953308]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="RowBlood" type="HBoxContainer" parent="VBoxContainer" unique_id=1567757142]
+layout_mode = 2
+alignment = 1
+
+[node name="BuyButton" type="Button" parent="VBoxContainer/RowBlood" unique_id=1709928964]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 32
+text = "[+]"
+
+[node name="CostLabel" type="Label" parent="VBoxContainer/RowBlood" unique_id=695344993]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "20 - "
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/RowBlood" unique_id=1170544117]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "Blood Drains Slower"
+
+[node name="RowStamina" type="HBoxContainer" parent="VBoxContainer" unique_id=1963635578]
+layout_mode = 2
+alignment = 1
+
+[node name="BuyButton" type="Button" parent="VBoxContainer/RowStamina" unique_id=778131925]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 32
+text = "[+]"
+
+[node name="CostLabel" type="Label" parent="VBoxContainer/RowStamina" unique_id=1493713430]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "10 - "
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/RowStamina" unique_id=900209015]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "Stamina Drains Slower"
+
+[node name="RowSpeed" type="HBoxContainer" parent="VBoxContainer" unique_id=454205544]
+layout_mode = 2
+alignment = 1
+
+[node name="BuyButton" type="Button" parent="VBoxContainer/RowSpeed" unique_id=82237703]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 32
+text = "[+]"
+
+[node name="CostLabel" type="Label" parent="VBoxContainer/RowSpeed" unique_id=969064749]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "10 - "
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/RowSpeed" unique_id=189034937]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "Speed Upgrade (0/10)"
+
+[node name="RowDetsub" type="HBoxContainer" parent="VBoxContainer" unique_id=240675758]
+layout_mode = 2
+alignment = 1
+
+[node name="BuyButton" type="Button" parent="VBoxContainer/RowDetsub" unique_id=1483217993]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 32
+text = "[+]"
+
+[node name="CostLabel" type="Label" parent="VBoxContainer/RowDetsub" unique_id=76717006]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "100 - "
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/RowDetsub" unique_id=1217946610]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "DETSUB (0/2)"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=330647354]
+layout_mode = 2
+
+[node name="ContinueButton" type="Button" parent="VBoxContainer" unique_id=1579212375]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.4509804, 0, 0.15686275, 0.7254902)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 48
+text = "------CONTINUE?------
+"

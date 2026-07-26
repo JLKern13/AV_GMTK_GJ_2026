@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://drbaftgirgxub" path="res://Game/HUD.gd" id="1_tt7mc"]
 [ext_resource type="Texture2D" uid="uid://dvmdo5vx8xhen" path="res://Assets/Game/vampy blood 2.00.png" id="2_asbbg"]
 [ext_resource type="PackedScene" uid="uid://x78el1twrx7s" path="res://Game/DaySplash.tscn" id="3_yl612"]
+[ext_resource type="PackedScene" uid="uid://cb6gi2sgvx72e" path="res://Game/VictorySplash.tscn" id="4_bgy6a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yl612"]
 bg_color = Color(0.2123048, 0.21230489, 0.21230471, 1)
@@ -81,4 +82,7 @@ layout_mode = 2
 vertical_alignment = 2
 
 [node name="DaySplash" parent="." unique_id=1948218801 instance=ExtResource("3_yl612")]
+visible = false
+
+[node name="VictorySplash" parent="." unique_id=874938703 instance=ExtResource("4_bgy6a")]
 visible = false

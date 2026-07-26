@@ -19,6 +19,7 @@ var is_game_over_triggered: bool = false
 @onready var player: Player = $Player
 @onready var hud: HUD = $HUD
 @onready var day_splash: DaySplash = $HUD/DaySplash
+@onready var victory_splash: VictorySplash = $HUD/VictorySplash
 @onready var music_player: AudioStreamPlayer2D = $MusicPlayer
 @onready var stamina_bar: ProgressBar = $HUD/StaminaBar
 
@@ -43,7 +44,7 @@ func _process(delta: float) -> void:
 		
 	# Starvation Check in Night
 	if player.current_blood <= 0.0:
-		trigger_game_over("VAMPY STARVED IN THE NIGHT!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [int(current_day-1), int(reserve_bank), int(win_reserve_target)])
+		trigger_game_over("VAMPY STARVED IN THE NIGHT!\nNights Survived: %d\nTotal Banked: %d / %d PTS\nSoul Coins: %d" % [int(current_day-1), int(reserve_bank), int(win_reserve_target), StoreManager.soul_coins])
 		return
 		
 	time_remaining -= delta
@@ -68,7 +69,7 @@ func on_dawn_arrived() -> void:
 	
 	# 1. Daytime Starvation Check
 	if player.current_blood < sleep_cost:
-		trigger_game_over("VAMPY STARVED DURING THE DAY!\nNights Survived: %d\nFinal Reserves: %d PTS" % [int(current_day - 1), int(reserve_bank)])
+		trigger_game_over("VAMPY STARVED DURING THE DAY!\nNights Survived: %d\nFinal Reserves: %d PTS\nSoul Coins: %d" % [int(current_day - 1), int(reserve_bank), StoreManager.soul_coins])
 		return
 		
 	# 2. Reserve Banking Calculation
@@ -87,16 +88,18 @@ func on_dawn_arrived() -> void:
 	# 4. Check Win / Loss / Transition
 	if current_day >= max_days:
 		if reserve_bank >= win_reserve_target:
-			trigger_game_over("VICTORY! SURVIVED THE WINTER!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [int(current_day), int(reserve_bank), int(win_reserve_target)])
+			# ROUTE TO VICTORY SCREEN INSTEAD OF GAME OVER
+			trigger_victory("SURVIVED THE WINTER!\nNights Survived: %d\nTotal Banked: %d / %d PTS\nSoul Coins: %d" % [int(current_day), int(reserve_bank), int(win_reserve_target), StoreManager.soul_coins])
 		else:
-			trigger_game_over("WINTER CAME: STARVED!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [int(current_day), int(reserve_bank), int(win_reserve_target)])
+			trigger_game_over("WINTER CAME: STARVED!\nNights Survived: %d\nTotal Banked: %d / %d PTS\nSoul Coins: %d" % [int(current_day), int(reserve_bank), int(win_reserve_target), StoreManager.soul_coins])
 	else:
 		# Detailed Nightly Report Splash
-		var splash_text: String = "NIGHT %d SURVIVED!\n\nBanked Tonight: +%d PTS\nTotal Reserves: %d / %d PTS\n\nPREPARE FOR NIGHT %d" % [
+		var splash_text: String = "NIGHT %d SURVIVED!\n\nBanked Tonight: +%d PTS\nTotal Reserves: %d / %d PTS\nSoul Coins: %d\n\nPREPARE FOR NIGHT %d" % [
 			current_day,
 			int(surplus_banked),
 			int(reserve_bank),
 			int(win_reserve_target),
+			StoreManager.soul_coins,
 			current_day + 1
 		]
 		
@@ -126,10 +129,11 @@ func start_next_day() -> void:
 
 # HELPER: Formats police bust screen with stats
 func trigger_busted_game_over() -> void:
-	var busted_text: String = "BUSTED BY THE POLICE!\nNights Survived: %d\nTotal Banked: %d / %d PTS" % [
+	var busted_text: String = "BUSTED BY THE POLICE!\nNights Survived: %d\nTotal Banked: %d / %d PTS\nSoul Coins: %d" % [
 		int(current_day - 1),
 		int(reserve_bank),
-		int(win_reserve_target)
+		int(win_reserve_target),
+		StoreManager.soul_coins
 	]
 	trigger_game_over(busted_text)
 
@@ -143,3 +147,14 @@ func trigger_game_over(reason_text: String) -> void:
 	
 	var display_title = "GAME OVER\n" + reason_text
 	day_splash.play_transition(display_title, true)
+
+func trigger_victory(reason_text: String) -> void:
+	music_player.stop()
+	if is_game_over_triggered:
+		return
+		
+	is_game_over_triggered = true
+	is_night_active = false
+	
+	var display_title = "VICTORY!\n" + reason_text
+	victory_splash.play_victory(display_title)

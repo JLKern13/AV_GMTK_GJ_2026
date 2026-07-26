@@ -28,7 +28,7 @@ func update_day_display(current_day: int, total_days: int = 10) -> void:
 	day_label.text = "DAYS LEFT - %02d" % [days_left]
 
 func update_reserve_display(reserve_amount: float) -> void:
-	reserve_label.text = "RESERVE: %d PTS" % int(reserve_amount)
+	reserve_label.text = "RESERVE: %d PTS\nSOUL COINS: %d" % [int(reserve_amount),StoreManager.soul_coins]
 
 func update_time_display(seconds_remaining: float) -> void:
 	var minutes: int = int(floor(seconds_remaining) / 60)

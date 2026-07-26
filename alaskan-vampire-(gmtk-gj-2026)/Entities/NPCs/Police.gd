@@ -56,7 +56,6 @@ func _physics_process(delta: float) -> void:
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body is Player:
 		trigger_alert(body)
-		sfx_player.play()
 
 func trigger_panic(player_node: Player) -> void:
 	trigger_alert(player_node)
@@ -64,6 +63,9 @@ func trigger_panic(player_node: Player) -> void:
 func trigger_alert(player_node: Player) -> void:
 	if current_state == State.BEING_EATEN:
 		return
+	if current_state != State.ALERT:
+		sfx_player.play()
+	
 	current_state = State.ALERT
 	is_alert = true
 	target_player = player_node
@@ -94,7 +96,24 @@ func _catch_player() -> void:
 	# Safety Check: Don't trigger a catch if dawn has already broken!
 	if main_scene and "is_night_active" in main_scene and not main_scene.is_night_active:
 		return
+	
+	# --- NEW: CHECK FOR IMMUNITY CARD ---
+	if StoreManager.detsub_level > 0:
+		StoreManager.detsub_level -= 1 # Consume the card!
 		
+		# Turn off catch collision so it doesn't loop
+		if catch_area:
+			catch_area.set_deferred("monitoring", false)
+			
+		print("UNO REVERSE! Vampy ate the cop!")
+		
+		# Force Vampy to feed on this cop
+		if target_player and target_player.has_method("start_feeding"):
+			target_player.start_feeding(self)
+			
+		return # Stop the rest of the game over logic!
+	# ------------------------------------
+	
 	has_caught_player = true
 	
 	if catch_area:

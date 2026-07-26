@@ -34,7 +34,18 @@ var is_exhausted: bool = false
 var exhaustion_timer: float = 0.0
 
 func _ready() -> void:
-	is_in_shadow = true
+	is_in_shadow = true# Apply Blood Upgrade (e.g., -0.2 drain per level)
+	var blood_reduction = StoreManager.blood_upgrade_level * 0.2
+	blood_drain_rate = max(0.5, blood_drain_rate - blood_reduction)
+	
+	# Apply Stamina Upgrade (e.g., -5.0 drain per level)
+	var stamina_reduction = StoreManager.stamina_upgrade_level * 5.0
+	stamina_drain_rate = max(10.0, stamina_drain_rate - stamina_reduction)
+	
+	# Apply Speed Upgrade (e.g., +10 speed per level)
+	var speed_boost = StoreManager.speed_upgrade_level * 10.0
+	walk_speed += speed_boost
+	run_speed += speed_boost
 
 func _process(delta: float) -> void:
 	# Continuous blood drain over time
@@ -161,6 +172,14 @@ func start_feeding(target_npc: BaseNPC) -> void:
 	# RACE CONDITION FIX: Verify target_npc wasn't freed by dawn despawning during the await!
 	if is_feeding and is_instance_valid(target_npc):
 		add_blood(target_npc.blood_value)
+		
+		# --- NEW: SOUL COIN REWARDS ---
+		if target_npc is Police: # Or use target_npc.is_in_group("police")
+			StoreManager.soul_coins += 2
+		else:
+			StoreManager.soul_coins += 1
+		print("Total Coins: ", StoreManager.soul_coins)
+		
 		target_npc.queue_free()
 		
 	# Always reset state & animation cleanly
